@@ -1,4 +1,4 @@
-name: CI for FiszkIt
+name: CI
 
 on:
   push:
