@@ -1,0 +1,22 @@
+services:
+  api:
+    image: fiszkit.api
+    container_name: api
+    build:
+      context: .
+      dockerfile: FiszkIt.Api/Dockerfile
+    ports:
+      - 5000:5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+
+  database:
+    image: postgres:latest
+    container_name: db
+    environment:
+      - POSTGRES_DB=fiszkit
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    ports:
+      - 5432:5432

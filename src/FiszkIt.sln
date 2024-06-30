@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Api", "FiszkIt.Api\FiszkIt.Api.csproj", "{D34C3983-2CA0-4887-87F8-D32EB117FFB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{347AB532-6A60-4505-9F04-825A7E58B663}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Domain", "FiszkIt.Domain\FiszkIt.Domain.csproj", "{AADAD743-7F55-4CB0-97E5-B76354B3DA62}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D34C3983-2CA0-4887-87F8-D32EB117FFB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34C3983-2CA0-4887-87F8-D32EB117FFB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34C3983-2CA0-4887-87F8-D32EB117FFB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34C3983-2CA0-4887-87F8-D32EB117FFB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADAD743-7F55-4CB0-97E5-B76354B3DA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADAD743-7F55-4CB0-97E5-B76354B3DA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADAD743-7F55-4CB0-97E5-B76354B3DA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADAD743-7F55-4CB0-97E5-B76354B3DA62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+EndGlobal
