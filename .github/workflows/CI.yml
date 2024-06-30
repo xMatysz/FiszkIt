@@ -1,0 +1,26 @@
+name: CI for FiszkIt
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Test
+        run: dotnet restore ./src/FiszkIt.sln
+
+      - name: Build
+        run: dotnet build ./src/FiszkIt.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test ./src/FiszkIt.sln --no-build --no-restore --verbosity normal
