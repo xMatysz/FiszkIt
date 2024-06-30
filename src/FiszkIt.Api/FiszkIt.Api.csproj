@@ -18,4 +18,8 @@
     <None Remove="Properties\launchSettings.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.7.0" />
+  </ItemGroup>
+
 </Project>
