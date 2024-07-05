@@ -2,3 +2,4 @@ FiszkIt.sln.DotSettings.user
 .idea/
 *obj/
 *bin/
+/FiszkIt.Api/Properties/launchSettings.json

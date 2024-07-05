@@ -1,3 +1,8 @@
 ﻿@url = http://127.0.0.1:5000
 
-GET {{url}}/
+GET {{url}}/getLogin
+###
+
+@code =
+GET {{url}}/getToken?code={{code}}
+###
