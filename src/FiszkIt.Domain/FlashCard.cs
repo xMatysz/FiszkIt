@@ -4,6 +4,7 @@ namespace FiszkIt.Domain;
 
 public class FlashCard : ValueObject
 {
+    public int Id { get; set; }
     public string Question { get; private set; }
     public string Answer { get; private set; }
 

@@ -24,4 +24,8 @@ public class FlashSet : Entity
     {
         _flashCards.Remove(flashCard);
     }
+
+    private FlashSet()
+    {
+    }
 }

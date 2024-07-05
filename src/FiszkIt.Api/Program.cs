@@ -1,7 +1,10 @@
 using System.Text.Json;
 using FiszkIt.Api.Configuration;
 using FiszkIt.Api.Responses;
+using FiszkIt.Infrastructure;
+using FiszkIt.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.ConfigureOptions<JwtBearerOptionsConfigure>();
     builder.Services.ConfigureOptions<CognitoOptionsConfigure>();
+
+    builder.Services.AddScoped<IFlashSetRepository, FlashSetDynamoRepository>();
+
+    builder.Services.AddDbContext<FiszkItDbContext>(opt => opt.UseNpgsql(""));
 }
 
 var app = builder.Build();
