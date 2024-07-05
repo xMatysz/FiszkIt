@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 
-namespace FiszkIt.Api;
+namespace FiszkIt.Api.Configuration;
 
 public class JwtBearerOptionsConfigure(IConfiguration configuration)
     : IConfigureNamedOptions<JwtBearerOptions>

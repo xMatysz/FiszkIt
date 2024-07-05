@@ -1,5 +1,5 @@
 using System.Text.Json;
-using FiszkIt.Api;
+using FiszkIt.Api.Configuration;
 using FiszkIt.Api.Responses;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;

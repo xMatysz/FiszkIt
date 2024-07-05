@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace FiszkIt.Api;
+namespace FiszkIt.Api.Configuration;
 
 public class CognitoOptionsConfigure(IConfiguration configuration) : IConfigureNamedOptions<CognitoOptions>
 {

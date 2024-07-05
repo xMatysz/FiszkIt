@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace FiszkIt.Api;
+namespace FiszkIt.Api.Common;
 
 public static class Extensions
 {

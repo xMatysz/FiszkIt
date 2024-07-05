@@ -2,7 +2,7 @@ namespace FiszkIt.Core;
 
 public abstract class Entity
 {
-    public Guid Id { get; protected init; }
+    public Guid Id { get; }
 
     protected Entity(Guid id)
     {

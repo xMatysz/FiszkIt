@@ -1,4 +1,4 @@
-namespace FiszkIt.Api;
+namespace FiszkIt.Api.Configuration;
 
 public class CognitoOptions
 {

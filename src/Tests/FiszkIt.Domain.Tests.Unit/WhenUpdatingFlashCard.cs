@@ -8,8 +8,8 @@ public class WhenUpdatingFlashCard
     [Fact]
     public void Update_Should_UpdateProperties()
     {
-        var newQuestion = "What";
-        var newAnswer = "Yes";
+        const string newQuestion = "What";
+        const string newAnswer = "Yes";
         var initCard = new FlashCard("q", "a");
 
         initCard.Update(newQuestion, newAnswer);
