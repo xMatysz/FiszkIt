@@ -6,8 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\FiszkIt.Core\FiszkIt.Core.csproj" />
-    </ItemGroup>
-
 </Project>

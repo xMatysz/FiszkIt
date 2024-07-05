@@ -4,6 +4,6 @@ namespace FiszkIt.Api;
 
 public static class Extensions
 {
-    public static string GetUserId(this HttpContext context)
-        => context.User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+    public static Guid GetUserId(this HttpContext context)
+        => Guid.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 }

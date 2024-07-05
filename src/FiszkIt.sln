@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DD5F94C4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Domain.Tests.Unit", "Tests\FiszkIt.Domain.Tests.Unit\FiszkIt.Domain.Tests.Unit.csproj", "{74B73480-1861-4798-A0AB-99DDD705143A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Core", "FiszkIt.Core\FiszkIt.Core.csproj", "{B8432792-B47E-4997-BF25-E093A9A387F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{74B73480-1861-4798-A0AB-99DDD705143A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74B73480-1861-4798-A0AB-99DDD705143A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74B73480-1861-4798-A0AB-99DDD705143A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8432792-B47E-4997-BF25-E093A9A387F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8432792-B47E-4997-BF25-E093A9A387F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8432792-B47E-4997-BF25-E093A9A387F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8432792-B47E-4997-BF25-E093A9A387F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{74B73480-1861-4798-A0AB-99DDD705143A} = {DD5F94C4-0FC7-4CBE-82F7-3C59F5E690C7}

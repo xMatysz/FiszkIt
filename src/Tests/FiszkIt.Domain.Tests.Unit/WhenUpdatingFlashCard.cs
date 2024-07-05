@@ -10,7 +10,7 @@ public class WhenUpdatingFlashCard
     {
         var newQuestion = "What";
         var newAnswer = "Yes";
-        var initCard = new Flashcard("q", "a");
+        var initCard = new FlashCard("q", "a");
 
         initCard.Update(newQuestion, newAnswer);
 
