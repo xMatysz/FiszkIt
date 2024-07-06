@@ -56,7 +56,9 @@ var app = builder.Build();
         return resp;
     });
 
-    app.MapFlashSetEndpoints();
+    app
+        .MapFlashSetEndpoints()
+        .MapFlashCardEndpoints();
 }
 
 app.Run();

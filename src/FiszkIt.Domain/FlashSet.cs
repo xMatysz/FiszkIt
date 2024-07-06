@@ -34,9 +34,9 @@ public class FlashSet : Entity
         _flashCards.Add(flashCard);
     }
 
-    public void RemoveFlashCard(FlashCard flashCard)
+    public void RemoveFlashCard(int flashCardId)
     {
-        _flashCards.Remove(flashCard);
+        _flashCards.RemoveAll(f => f.Id == flashCardId);
     }
 
     private FlashSet()

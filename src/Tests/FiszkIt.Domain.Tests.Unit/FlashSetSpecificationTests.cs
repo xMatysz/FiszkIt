@@ -51,10 +51,13 @@ public class FlashSetSpecificationTests
     [Fact]
     public void RemoveFlashCard_Should_RemoveFlashCardFromCollection()
     {
-        var flashCard = new FlashCard("q", "a");
+        var flashCard = new FlashCard("q", "a")
+        {
+            Id = 1
+        };
         var flashSet = FlashSetBuilder.Default().WithFlashCards(flashCard).Build();
 
-        flashSet.RemoveFlashCard(flashCard);
+        flashSet.RemoveFlashCard(1);
 
         flashSet.FlashCards.Should().BeEmpty();
     }

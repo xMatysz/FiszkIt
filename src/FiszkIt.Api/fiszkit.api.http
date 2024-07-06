@@ -5,7 +5,6 @@ GET {{url}}/getLogin
 GET {{url}}/getToken?code={{code}}
 ###
 
-
 GET {{url}}/flashSets
 Authorization: Bearer {{token}}
 ###
@@ -19,6 +18,30 @@ Content-Type: application/json
 }
 ###
 
-@flashSetId = 602ef1be-06ca-4dab-9a7d-9268a1699a6a
-DELETE {{url}}/flashSets?flashSetId={{flashSetId}}
+@flashSetId1 = 602ef1be-06ca-4dab-9a7d-9268a1699a6a
+DELETE {{url}}/flashSets?flashSetId={{flashSetId1}}
 Authorization: Bearer {{token}}
+###
+
+@flashSetId2 = cda9ee33-8e82-49bc-a6ab-961d158764c5
+GET {{url}}/flashCards?flashSetId={{flashSetId2}}
+Authorization: Bearer {{token}}
+###
+
+POST {{url}}/flashCards
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "FlashSetId" : "cda9ee33-8e82-49bc-a6ab-961d158764c5",
+  "Question" : "Question4",
+  "Answer" : "Answer3"
+}
+###
+
+@flashSetId4 = cda9ee33-8e82-49bc-a6ab-961d158764c5
+@flashCardId = 2
+DELETE {{url}}/flashCards?flashSetId={{flashSetId4}}&flashCardId={{flashCardId}}
+Authorization: Bearer {{token}}
+###
+

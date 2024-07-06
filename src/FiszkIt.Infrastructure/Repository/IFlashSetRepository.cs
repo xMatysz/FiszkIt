@@ -37,6 +37,7 @@ public class FlashSetRepository : IFlashSetRepository
     public Task<FlashSet> GetById(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
     {
         return _dbContext.Set<FlashSet>()
+            .Include(x => x.FlashCards)
             .Where(f => f.CreatorId == userId && f.Id == flashSetId)
             .FirstAsync(cancellationToken);
     }
