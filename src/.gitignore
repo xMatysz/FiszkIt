@@ -4,3 +4,4 @@ FiszkIt.sln.DotSettings.user
 *bin/
 /FiszkIt.Api/Properties/launchSettings.json
 /FiszkIt.Api/http-client.private.env.json
+/docker-compose.override.yml

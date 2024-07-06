@@ -2,6 +2,9 @@ services:
   api:
     image: fiszkit.api
     container_name: api
+    extends:
+      file: docker-compose.override.yml
+      service: api
     build:
       context: .
       dockerfile: FiszkIt.Api/Dockerfile

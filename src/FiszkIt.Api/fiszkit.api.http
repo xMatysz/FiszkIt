@@ -2,6 +2,16 @@
 GET {{url}}/getLogin
 ###
 
-@code =
 GET {{url}}/getToken?code={{code}}
 ###
+
+POST {{url}}/flashSets
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "Name" : "FlashSet2"
+}
+###
+GET {{url}}/flashSets
+Authorization: Bearer {{token}}
