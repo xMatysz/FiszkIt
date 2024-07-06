@@ -5,13 +5,20 @@ GET {{url}}/getLogin
 GET {{url}}/getToken?code={{code}}
 ###
 
+
+GET {{url}}/flashSets
+Authorization: Bearer {{token}}
+###
+
 POST {{url}}/flashSets
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "Name" : "FlashSet2"
+  "Name" : "FlashSet3"
 }
 ###
-GET {{url}}/flashSets
+
+@flashSetId = 602ef1be-06ca-4dab-9a7d-9268a1699a6a
+DELETE {{url}}/flashSets?flashSetId={{flashSetId}}
 Authorization: Bearer {{token}}

@@ -8,6 +8,7 @@ public interface IFlashSetRepository
     Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken cancellationToken);
 
     Task AddAsync(FlashSet flashSet, CancellationToken cancellationToken);
+    Task<FlashSet> GetById(Guid userId, Guid flashSetId, CancellationToken cancellationToken);
 }
 
 public class FlashSetRepository : IFlashSetRepository
@@ -19,9 +20,9 @@ public class FlashSetRepository : IFlashSetRepository
         _dbContext = dbContext;
     }
 
-    public async Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken cancellationToken)
+    public Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<FlashSet>()
+        return _dbContext.Set<FlashSet>()
             .AsNoTracking()
             .Where(f => f.CreatorId == userId)
             .Select(x => new FlashSetDto(x))
@@ -31,6 +32,13 @@ public class FlashSetRepository : IFlashSetRepository
     public async Task AddAsync(FlashSet flashSet, CancellationToken cancellationToken)
     {
         await _dbContext.AddAsync(flashSet, cancellationToken);
+    }
+
+    public Task<FlashSet> GetById(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
+    {
+        return _dbContext.Set<FlashSet>()
+            .Where(f => f.CreatorId == userId && f.Id == flashSetId)
+            .FirstAsync(cancellationToken);
     }
 }
 
