@@ -1,4 +1,4 @@
-﻿@flashSetId = cda9ee33-8e82-49bc-a6ab-961d158764c5
+﻿@flashSetId = 4a6ab72d-e50c-4d75-89b6-c2b8fe49a73b
 @flashCardId = 2
 
 ###################################
@@ -12,6 +12,10 @@ GET {{url}}/token/{{refreshToken}}
 ###################################
 
 GET {{url}}/flashSets
+Authorization: Bearer {{token}}
+###
+
+GET {{url}}/flashSets/{{flashSetId}}
 Authorization: Bearer {{token}}
 ###
 
@@ -39,7 +43,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "FlashSetId" : {{flashSetId}},
+  "FlashSetId" : "{{flashSetId}}",
   "Question" : "Question4",
   "Answer" : "Answer3"
 }
