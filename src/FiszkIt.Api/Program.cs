@@ -1,14 +1,11 @@
-using System.Text.Json;
 using FiszkIt.Api.Configuration;
 using FiszkIt.Api.Endpoints.FlashCardEndpoints;
 using FiszkIt.Api.Endpoints.FlashSetEndpoints;
 using FiszkIt.Api.Endpoints.LoginEndpoints;
-using FiszkIt.Api.Responses;
 using FiszkIt.Infrastructure;
 using FiszkIt.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -32,13 +29,11 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
 
-    RunMigration(app);
-}
-{
-    app
-        .RegisterFlashSetEndpoints()
-        .MapFlashCardEndpoints()
+    app.RegisterFlashSetEndpoints()
+        .RegisterFlashCardEndpoints()
         .RegisterLoginEndpoints();
+
+    RunMigration(app);
 }
 
 app.Run();

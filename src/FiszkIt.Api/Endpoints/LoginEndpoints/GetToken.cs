@@ -1,12 +1,18 @@
 using System.Text.Json;
 using FiszkIt.Api.Configuration;
-using FiszkIt.Api.Responses;
 using Microsoft.Extensions.Options;
 
 namespace FiszkIt.Api.Endpoints.LoginEndpoints;
 
 public static class GetToken
 {
+    private class LoginGetTokenResponse(
+        string IdToken,
+        string AccessToken,
+        string RefreshToken,
+        int ExpiresIn,
+        string TokenType);
+
     public static IEndpointRouteBuilder MapGetToken(this IEndpointRouteBuilder app)
     {
         app.MapGet("/getToken", async (IOptions<CognitoOptions> cognitoOptions, string code) =>
@@ -15,14 +21,14 @@ public static class GetToken
             var client = new HttpClient();
             var dic = new Dictionary<string, string>
             {
-                { "grant_type", cognitoOptions.Value.GrantType },
+                { "grant_type", "authorization_code" },
                 { "client_id", cognitoOptions.Value.ClientId },
                 { "client_secret", cognitoOptions.Value.ClientSecret },
                 { "redirect_uri", cognitoOptions.Value.RedirectUri },
                 { "code", code }
             };
             var res = await client.PostAsync(tokenUrl, new FormUrlEncodedContent(dic));
-            var resp = await res.Content.ReadFromJsonAsync<TokenResponse>(new JsonSerializerOptions
+            var resp = await res.Content.ReadFromJsonAsync<LoginGetTokenResponse>(new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
             });

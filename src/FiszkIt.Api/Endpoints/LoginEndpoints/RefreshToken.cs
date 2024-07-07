@@ -1,15 +1,20 @@
 using System.Text.Json;
 using FiszkIt.Api.Configuration;
-using FiszkIt.Api.Responses;
 using Microsoft.Extensions.Options;
 
 namespace FiszkIt.Api.Endpoints.LoginEndpoints;
 
 public static class RefreshToken
 {
+    private class LoginRefreshTokenResponse(
+        string IdToken,
+        string AccessToken,
+        string RefreshToken,
+        int ExpiresIn,
+        string TokenType);
+
     public static IEndpointRouteBuilder MapRefreshToken(this IEndpointRouteBuilder app)
     {
-
         app.MapGet("/refreshToken", async (IOptions<CognitoOptions> cognitoOptions, string refreshToken) =>
         {
             var tokenUrl = $"{cognitoOptions.Value.DomainUrl}/oauth2/token";
@@ -23,14 +28,12 @@ public static class RefreshToken
                 { "refresh_token", refreshToken }
             };
             var res = await client.PostAsync(tokenUrl, new FormUrlEncodedContent(dic));
-            var resp = await res.Content.ReadFromJsonAsync<TokenResponse>(new JsonSerializerOptions
+            var resp = await res.Content.ReadFromJsonAsync<LoginRefreshTokenResponse>(new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
             });
             return resp;
         });
-
-        return app;
 
         return app;
     }
