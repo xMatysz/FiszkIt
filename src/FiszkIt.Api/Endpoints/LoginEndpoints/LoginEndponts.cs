@@ -4,10 +4,8 @@ public static class LoginEndpoints
 {
     public static IEndpointRouteBuilder RegisterLoginEndpoints(this IEndpointRouteBuilder app)
     {
-
         app.MapGetLogin()
-            .MapGetToken()
-            .MapRefreshToken();
+            .MapGetToken();
 
         return app;
     }

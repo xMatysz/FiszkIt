@@ -22,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddDbContext<FiszkItDbContext>(
         opt => opt.UseNpgsql(builder.Configuration.GetSection("connectionString").Value));
+    builder.Services.AddHttpClient();
 }
 
 var app = builder.Build();

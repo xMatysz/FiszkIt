@@ -1,12 +1,15 @@
-﻿
+﻿@flashSetId = 602ef1be-06ca-4dab-9a7d-9268a1699a6a
+@flashCardId = 2
+
+###################################
+
 GET {{url}}/getLogin
 ###
 
-GET {{url}}/getToken?code={{code}}
+GET {{url}}/token/{{refreshToken}}
 ###
 
-GET {{url}}/refreshToken?refreshToken={{refreshToken}}
-###
+###################################
 
 GET {{url}}/flashSets
 Authorization: Bearer {{token}}
@@ -21,13 +24,13 @@ Content-Type: application/json
 }
 ###
 
-@flashSetId1 = 602ef1be-06ca-4dab-9a7d-9268a1699a6a
-DELETE {{url}}/flashSets?flashSetId={{flashSetId1}}
+DELETE {{url}}/flashSets?flashSetId={{flashSetId}}
 Authorization: Bearer {{token}}
 ###
 
-@flashSetId2 = cda9ee33-8e82-49bc-a6ab-961d158764c5
-GET {{url}}/flashCards?flashSetId={{flashSetId2}}
+###################################
+
+GET {{url}}/flashCards?flashSetId={{flashSetId}}
 Authorization: Bearer {{token}}
 ###
 
@@ -36,15 +39,13 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "FlashSetId" : "cda9ee33-8e82-49bc-a6ab-961d158764c5",
+  "FlashSetId" : {{flashSetId}},
   "Question" : "Question4",
   "Answer" : "Answer3"
 }
 ###
 
-@flashSetId4 = cda9ee33-8e82-49bc-a6ab-961d158764c5
-@flashCardId = 2
-DELETE {{url}}/flashCards?flashSetId={{flashSetId4}}&flashCardId={{flashCardId}}
+DELETE {{url}}/flashCards?flashSetId={{flashSetId}}&flashCardId={{flashCardId}}
 Authorization: Bearer {{token}}
 ###
 
