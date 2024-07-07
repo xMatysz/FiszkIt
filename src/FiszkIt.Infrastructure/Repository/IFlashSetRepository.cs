@@ -1,11 +1,12 @@
 using FiszkIt.Domain;
+using FiszkIt.Infrastructure.Repository.Dtos;
 using Microsoft.EntityFrameworkCore;
 
 namespace FiszkIt.Infrastructure.Repository;
 
 public interface IFlashSetRepository
 {
-    Task AddAsync(FlashSet flashSet, CancellationToken cancellationToken);
+    Task<FlashSetDto> AddAsync(FlashSet flashSet, CancellationToken cancellationToken);
     Task<FlashSet> GetById(Guid userId, Guid flashSetId, CancellationToken cancellationToken);
 }
 
@@ -18,9 +19,12 @@ public class FlashSetRepository : IFlashSetRepository
         _dbContext = dbContext;
     }
 
-    public async Task AddAsync(FlashSet flashSet, CancellationToken cancellationToken)
+    public async Task<FlashSetDto> AddAsync(FlashSet flashSet, CancellationToken cancellationToken)
     {
         await _dbContext.AddAsync(flashSet, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return new FlashSetDto(flashSet);
     }
 
     public Task<FlashSet> GetById(Guid userId, Guid flashSetId, CancellationToken cancellationToken)

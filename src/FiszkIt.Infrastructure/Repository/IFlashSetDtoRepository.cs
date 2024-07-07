@@ -6,8 +6,8 @@ namespace FiszkIt.Infrastructure.Repository;
 
 public interface IFlashSetDtoRepository
 {
-    Task<FlashSetDto?> GetByIdForUser(Guid flashCardId, Guid userId, CancellationToken cancellationToken);
-    Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken cancellationToken);
+    Task<FlashSetDto?> GetByIdForUserAsync(Guid flashCardId, Guid userId, CancellationToken cancellationToken);
+    Task<FlashSetDto[]> GetAllForUserAsync(Guid userId, CancellationToken cancellationToken);
 }
 
 public class FlashSetDtoRepository : IFlashSetDtoRepository
@@ -19,7 +19,7 @@ public class FlashSetDtoRepository : IFlashSetDtoRepository
         _dbContext = dbContext;
     }
 
-    public async Task<FlashSetDto?> GetByIdForUser(Guid flashCardId, Guid userId, CancellationToken cancellationToken)
+    public async Task<FlashSetDto?> GetByIdForUserAsync(Guid flashCardId, Guid userId, CancellationToken cancellationToken)
     {
         var flashCard = await _dbContext.Set<FlashSet>()
             .Include(x => x.FlashCards)
@@ -29,7 +29,7 @@ public class FlashSetDtoRepository : IFlashSetDtoRepository
         return flashCard is null ? null : new FlashSetDto(flashCard);
     }
 
-    public Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken cancellationToken)
+    public Task<FlashSetDto[]> GetAllForUserAsync(Guid userId, CancellationToken cancellationToken)
     {
         return _dbContext.Set<FlashSet>()
             .Include(x => x.FlashCards)

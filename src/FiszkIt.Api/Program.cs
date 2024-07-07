@@ -31,9 +31,10 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
 
-    app.RegisterFlashSetEndpoints()
-        .RegisterFlashCardEndpoints()
-        .RegisterLoginEndpoints();
+    app
+        .RegisterLoginEndpoints()
+        .RegisterFlashSetEndpoints()
+        .RegisterFlashCardEndpoints();
 
     RunMigration(app);
 }

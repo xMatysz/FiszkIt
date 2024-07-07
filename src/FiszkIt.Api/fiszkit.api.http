@@ -24,7 +24,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "Name" : "FlashSet3"
+  "Name" : "FlashSet16"
 }
 ###
 

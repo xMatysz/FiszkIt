@@ -11,16 +11,18 @@ public static class GetAll
     public static IEndpointRouteBuilder MapGetAll(this IEndpointRouteBuilder app)
     {
         app.MapGet("/flashSets", async (
-            HttpContext context,
-            IFlashSetDtoRepository repository,
-            CancellationToken cancellationToken) =>
-        {
-            var flashSets = await repository.GetAllForUser(context.GetUserId(), cancellationToken);
-            var response = flashSets
-                .Select(f => new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));
+                HttpContext context,
+                IFlashSetDtoRepository repository,
+                CancellationToken cancellationToken) =>
+            {
+                var flashSets = await repository.GetAllForUserAsync(context.GetUserId(), cancellationToken);
+                var response = flashSets
+                    .Select(f => new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));
 
-            return Results.Ok(response);
-        }).RequireAuthorization();
+                return Results.Ok(response);
+            })
+            .RequireAuthorization()
+            .WithName("flashSets/getAll");
 
         return app;
     }

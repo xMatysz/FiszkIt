@@ -1,30 +1,33 @@
 using FiszkIt.Api.Common;
 using FiszkIt.Domain;
-using FiszkIt.Infrastructure;
 using FiszkIt.Infrastructure.Repository;
-using Microsoft.AspNetCore.Mvc;
+using FiszkIt.Infrastructure.Repository.Dtos;
 
 namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
 public static class Create
 {
-    public record FlashSetsCreateRequest();
-    public record FlashSetsCreateResponse();
+    private record FlashSetsCreateRequest(string Name);
+    private record FlashSetsCreateResponse(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCardDtos);
     public static IEndpointRouteBuilder MapCreate(this IEndpointRouteBuilder app)
     {
         app.MapPost("/flashSets", async (
-            [FromBody] CreateFlashSetRequest request,
-            HttpContext context,
-            IFlashSetRepository repository,
-            FiszkItDbContext dbContext,
-            CancellationToken cancellationToken) =>
-        {
-            var flashSet = FlashSet.Create(context.GetUserId(), request.Name);
+                FlashSetsCreateRequest request,
+                HttpContext context,
+                IFlashSetRepository repository,
+                CancellationToken cancellationToken) =>
+            {
+                var flashSet = FlashSet.Create(context.GetUserId(), request.Name);
 
-            await repository.AddAsync(flashSet.Value, cancellationToken);
+                var set = await repository.AddAsync(flashSet.Value, cancellationToken);
+                var response = new FlashSetsCreateResponse(set.Id, set.CreatorId, set.Name, set.FlashCards);
 
-            await dbContext.SaveChangesAsync(cancellationToken);
-        }).RequireAuthorization();
+                return Results.CreatedAtRoute(
+                    "FlashSets/GetById", new { flashSetId = response.Id }, response);
+
+            })
+            .RequireAuthorization()
+            .WithName("flashSets/create");
 
         return app;
     }

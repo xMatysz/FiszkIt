@@ -13,18 +13,20 @@ public static class Delete
     {
 
         app.MapDelete("/flashSets", async (
-            Guid flashSetId,
-            HttpContext context,
-            IFlashSetRepository repository,
-            FiszkItDbContext dbContext,
-            CancellationToken cancellationToken) =>
-        {
-            var flashSet = await repository.GetById(context.GetUserId(), flashSetId, cancellationToken);
+                Guid flashSetId,
+                HttpContext context,
+                IFlashSetRepository repository,
+                FiszkItDbContext dbContext,
+                CancellationToken cancellationToken) =>
+            {
+                var flashSet = await repository.GetById(context.GetUserId(), flashSetId, cancellationToken);
 
-            dbContext.Remove(flashSet);
-            await dbContext.SaveChangesAsync(cancellationToken);
+                dbContext.Remove(flashSet);
+                await dbContext.SaveChangesAsync(cancellationToken);
 
-        }).RequireAuthorization();
+            })
+            .RequireAuthorization()
+            .WithName("flashSets/delete");
 
         return app;
     }
