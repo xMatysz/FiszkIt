@@ -6,13 +6,10 @@ namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
 public static class Delete
 {
-    public record FlashSetsDeleteRequest();
-    public record FlashSetsDeleteResponse();
-
     public static IEndpointRouteBuilder MapDelete(this IEndpointRouteBuilder app)
     {
 
-        app.MapDelete("/flashSets", async (
+        app.MapDelete("/flashSets/{flashSetId:guid}", async (
                 Guid flashSetId,
                 HttpContext context,
                 IFlashSetRepository repository,
@@ -24,6 +21,7 @@ public static class Delete
                 dbContext.Remove(flashSet);
                 await dbContext.SaveChangesAsync(cancellationToken);
 
+                return Results.NoContent();
             })
             .RequireAuthorization()
             .WithName("flashSets/delete");

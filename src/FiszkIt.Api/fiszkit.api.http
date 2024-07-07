@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 ###
 
-DELETE {{url}}/flashSets?flashSetId={{flashSetId}}
+DELETE {{url}}/flashSets/{{flashSetId}}
 Authorization: Bearer {{token}}
 ###
 
