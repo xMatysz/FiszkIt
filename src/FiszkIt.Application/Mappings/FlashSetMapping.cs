@@ -2,7 +2,7 @@ using FiszkIt.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FiszkIt.Infrastructure.Mappings;
+namespace FiszkIt.Application.Mappings;
 
 public class FlashSetMapping : IEntityTypeConfiguration<FlashSet>
 {

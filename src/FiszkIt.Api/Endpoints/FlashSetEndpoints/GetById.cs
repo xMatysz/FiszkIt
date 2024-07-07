@@ -1,6 +1,6 @@
 using FiszkIt.Api.Common;
-using FiszkIt.Infrastructure.Repository;
-using FiszkIt.Infrastructure.Repository.Dtos;
+using FiszkIt.Application.Repository;
+using FiszkIt.Application.Repository.Dtos;
 
 namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 

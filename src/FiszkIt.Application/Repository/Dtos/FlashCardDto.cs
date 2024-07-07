@@ -1,6 +1,6 @@
 using FiszkIt.Domain;
 
-namespace FiszkIt.Infrastructure.Repository.Dtos;
+namespace FiszkIt.Application.Repository.Dtos;
 
 public class FlashCardDto
 {

@@ -5,6 +5,7 @@ WORKDIR /src
 COPY ["FiszkIt.Api/FiszkIt.Api.csproj", "FiszkIt.Api/"]
 COPY ["FiszkIt.Domain/FiszkIt.Domain.csproj", "FiszkIt.Domain/"]
 COPY ["FiszkIt.Core/FiszkIt.Core.csproj", "FiszkIt.Core/"]
+COPY ["FiszkIt.Application/FiszkIt.Application.csproj", "FiszkIt.Application/"]
 
 RUN dotnet restore "FiszkIt.Api/FiszkIt.Api.csproj"
 

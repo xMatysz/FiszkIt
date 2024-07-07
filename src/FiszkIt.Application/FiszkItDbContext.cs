@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace FiszkIt.Infrastructure;
+namespace FiszkIt.Application;
 
 public class FiszkItDbContext : DbContext
 {

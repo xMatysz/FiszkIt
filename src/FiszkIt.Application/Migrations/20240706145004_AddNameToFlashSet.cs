@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace FiszkIt.Infrastructure.Migrations
+namespace FiszkIt.Application.Migrations
 {
     /// <inheritdoc />
     public partial class AddNameToFlashSet : Migration

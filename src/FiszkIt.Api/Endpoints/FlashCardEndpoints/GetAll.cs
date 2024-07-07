@@ -1,5 +1,5 @@
 using FiszkIt.Api.Common;
-using FiszkIt.Infrastructure.Repository;
+using FiszkIt.Application.Repository;
 
 namespace FiszkIt.Api.Endpoints.FlashCardEndpoints;
 

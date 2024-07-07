@@ -1,8 +1,8 @@
 using FiszkIt.Domain;
-using FiszkIt.Infrastructure.Repository.Dtos;
+using FiszkIt.Application.Repository.Dtos;
 using Microsoft.EntityFrameworkCore;
 
-namespace FiszkIt.Infrastructure.Repository;
+namespace FiszkIt.Application.Repository;
 
 public interface IFlashSetDtoRepository
 {

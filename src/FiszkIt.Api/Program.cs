@@ -2,8 +2,8 @@ using FiszkIt.Api.Configuration;
 using FiszkIt.Api.Endpoints.FlashCardEndpoints;
 using FiszkIt.Api.Endpoints.FlashSetEndpoints;
 using FiszkIt.Api.Endpoints.LoginEndpoints;
-using FiszkIt.Infrastructure;
-using FiszkIt.Infrastructure.Repository;
+using FiszkIt.Application;
+using FiszkIt.Application.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 

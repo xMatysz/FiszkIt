@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FiszkIt.Infrastructure\FiszkIt.Infrastructure.csproj" />
+    <ProjectReference Include="..\FiszkIt.Application\FiszkIt.Application.csproj" />
   </ItemGroup>
 
 </Project>

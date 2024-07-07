@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Domain.Tests.Unit",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Core", "FiszkIt.Core\FiszkIt.Core.csproj", "{B8432792-B47E-4997-BF25-E093A9A387F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Infrastructure", "FiszkIt.Infrastructure\FiszkIt.Infrastructure.csproj", "{58360F77-2842-4A8A-AE4C-8BEC7C025865}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiszkIt.Application", "FiszkIt.Application\FiszkIt.Application.csproj", "{58360F77-2842-4A8A-AE4C-8BEC7C025865}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

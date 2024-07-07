@@ -1,7 +1,7 @@
 using FiszkIt.Api.Common;
 using FiszkIt.Domain;
-using FiszkIt.Infrastructure;
-using FiszkIt.Infrastructure.Repository;
+using FiszkIt.Application;
+using FiszkIt.Application.Repository;
 
 namespace FiszkIt.Api.Endpoints.FlashCardEndpoints;
 
