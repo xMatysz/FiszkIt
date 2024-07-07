@@ -19,6 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.ConfigureOptions<CognitoOptionsConfigure>();
 
     builder.Services.AddScoped<IFlashSetRepository, FlashSetRepository>();
+    builder.Services.AddScoped<IFlashSetDtoRepository, FlashSetDtoRepository>();
 
     builder.Services.AddDbContext<FiszkItDbContext>(
         opt => opt.UseNpgsql(builder.Configuration.GetSection("connectionString").Value));

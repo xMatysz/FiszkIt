@@ -1,4 +1,5 @@
 using FiszkIt.Infrastructure.Repository;
+using FiszkIt.Infrastructure.Repository.Dtos;
 
 public sealed class GetFlashSetResponse
 {
