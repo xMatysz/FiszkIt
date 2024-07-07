@@ -9,5 +9,8 @@ public class FlashCardMapping : IEntityTypeConfiguration<FlashCard>
     public void Configure(EntityTypeBuilder<FlashCard> builder)
     {
         builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
     }
 }

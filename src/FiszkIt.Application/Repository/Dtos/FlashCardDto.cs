@@ -4,7 +4,7 @@ namespace FiszkIt.Application.Repository.Dtos;
 
 public class FlashCardDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Question { get; set; }
     public string Answer { get; set; }
 

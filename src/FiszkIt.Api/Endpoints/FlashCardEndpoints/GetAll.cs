@@ -5,7 +5,7 @@ namespace FiszkIt.Api.Endpoints.FlashCardEndpoints;
 
 public static class GetAll
 {
-    public record FlashCartGetAllResponse(int Id, string Question, string Answer);
+    public record FlashCartGetAllResponse(Guid Id, string Question, string Answer);
 
     public static IEndpointRouteBuilder MapGetAll(this IEndpointRouteBuilder app)
     {

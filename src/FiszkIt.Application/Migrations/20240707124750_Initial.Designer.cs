@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FiszkIt.Application.Migrations
 {
     [DbContext(typeof(FiszkItDbContext))]
-    [Migration("20240705210336_Initial")]
+    [Migration("20240707124750_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,11 +27,8 @@ namespace FiszkIt.Application.Migrations
 
             modelBuilder.Entity("FiszkIt.Domain.FlashCard", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Answer")
                         .IsRequired()
@@ -54,11 +51,14 @@ namespace FiszkIt.Application.Migrations
             modelBuilder.Entity("FiszkIt.Domain.FlashSet", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

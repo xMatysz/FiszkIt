@@ -1,4 +1,4 @@
-﻿@flashSetId = 4a6ab72d-e50c-4d75-89b6-c2b8fe49a73b
+﻿@flashSetId = 176412eb-207d-4ea5-baa5-b24803f80ed9
 @flashCardId = 2
 
 ###################################
@@ -44,8 +44,8 @@ Content-Type: application/json
 
 {
   "FlashSetId" : "{{flashSetId}}",
-  "Question" : "Question4",
-  "Answer" : "Answer3"
+  "Question" : "Question2",
+  "Answer" : "Answer7"
 }
 ###
 

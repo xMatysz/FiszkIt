@@ -2,13 +2,13 @@
 
 namespace FiszkIt.Domain;
 
-public class FlashCard : ValueObject
+public class FlashCard : Entity
 {
-    public int Id { get; set; }
     public string Question { get; private set; }
     public string Answer { get; private set; }
 
     public FlashCard(string question, string answer)
+        : base(Guid.NewGuid())
     {
         Question = question;
         Answer = answer;
@@ -18,11 +18,5 @@ public class FlashCard : ValueObject
     {
         Question = question;
         Answer = answer;
-    }
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Question;
-        yield return Answer;
     }
 }

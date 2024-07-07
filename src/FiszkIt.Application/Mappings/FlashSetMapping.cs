@@ -10,7 +10,8 @@ public class FlashSetMapping : IEntityTypeConfiguration<FlashSet>
     {
         builder.ToTable("FlashSets");
 
-        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
 
         builder.HasMany(x => x.FlashCards)
             .WithOne()

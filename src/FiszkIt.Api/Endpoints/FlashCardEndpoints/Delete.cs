@@ -10,7 +10,7 @@ public static class Delete
     {
         app.MapDelete("/flashCards", async (
             Guid flashSetId,
-            int flashCardId,
+            Guid flashCardId,
             HttpContext context,
             IFlashSetRepository repository,
             FiszkItDbContext dbContext,
