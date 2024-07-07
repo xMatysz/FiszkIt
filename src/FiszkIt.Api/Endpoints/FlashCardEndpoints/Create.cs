@@ -7,6 +7,8 @@ namespace FiszkIt.Api.Endpoints.FlashCardEndpoints;
 
 public static class Create
 {
+    public record CreateFlashCardRequest(Guid FlashSetId, string Question, string Answer);
+
     public static IEndpointRouteBuilder MapCreate(this IEndpointRouteBuilder app)
     {
         app.MapPost("/flashCards", async (

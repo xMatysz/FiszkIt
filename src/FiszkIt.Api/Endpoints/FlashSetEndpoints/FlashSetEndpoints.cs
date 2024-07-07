@@ -2,7 +2,7 @@ namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
 public static class FlashSetEndpoints
 {
-    public static IEndpointRouteBuilder MapFlashSetEndpoints(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder RegisterFlashSetEndpoints(this IEndpointRouteBuilder app)
     {
         app
             .MapGetAll()

@@ -11,5 +11,3 @@ public static class FlashCardEndpoints
         return app;
     }
 }
-
-public record CreateFlashCardRequest(Guid FlashSetId, string Question, string Answer);

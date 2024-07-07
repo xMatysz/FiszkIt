@@ -5,6 +5,9 @@ GET {{url}}/getLogin
 GET {{url}}/getToken?code={{code}}
 ###
 
+GET {{url}}/refreshToken?refreshToken={{refreshToken}}
+###
+
 GET {{url}}/flashSets
 Authorization: Bearer {{token}}
 ###

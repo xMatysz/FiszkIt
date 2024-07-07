@@ -2,6 +2,7 @@ using System.Text.Json;
 using FiszkIt.Api.Configuration;
 using FiszkIt.Api.Endpoints.FlashCardEndpoints;
 using FiszkIt.Api.Endpoints.FlashSetEndpoints;
+using FiszkIt.Api.Endpoints.LoginEndpoints;
 using FiszkIt.Api.Responses;
 using FiszkIt.Infrastructure;
 using FiszkIt.Infrastructure.Repository;
@@ -34,32 +35,10 @@ var app = builder.Build();
     RunMigration(app);
 }
 {
-    app.MapGet("/getLogin", async (IOptions<CognitoOptions> cognitoOptions) =>
-        $"{cognitoOptions.Value.DomainUrl}/login?response_type={cognitoOptions.Value.ResponseType}&client_id={cognitoOptions.Value.ClientId}&redirect_uri={cognitoOptions.Value.RedirectUri}");
-
-    app.MapGet("/getToken", async (IOptions<CognitoOptions> cognitoOptions, string code) =>
-    {
-        var tokenUrl = $"{cognitoOptions.Value.DomainUrl}/oauth2/token";
-        var client = new HttpClient();
-        var dic = new Dictionary<string, string>
-        {
-            { "grant_type", cognitoOptions.Value.GrantType },
-            { "client_id", cognitoOptions.Value.ClientId },
-            { "client_secret", cognitoOptions.Value.ClientSecret },
-            { "redirect_uri", cognitoOptions.Value.RedirectUri },
-            { "code", code }
-        };
-        var res = await client.PostAsync(tokenUrl, new FormUrlEncodedContent(dic));
-        var resp = await res.Content.ReadFromJsonAsync<TokenResponse>(new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        });
-        return resp;
-    });
-
     app
-        .MapFlashSetEndpoints()
-        .MapFlashCardEndpoints();
+        .RegisterFlashSetEndpoints()
+        .MapFlashCardEndpoints()
+        .RegisterLoginEndpoints();
 }
 
 app.Run();
