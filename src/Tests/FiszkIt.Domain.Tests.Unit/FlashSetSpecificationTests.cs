@@ -1,4 +1,4 @@
-using FiszkIt.Domain.Tests.Unit.Builders;
+using FiszkIt.Shared.Tests.Builders;
 using FluentAssertions;
 using Xunit;
 

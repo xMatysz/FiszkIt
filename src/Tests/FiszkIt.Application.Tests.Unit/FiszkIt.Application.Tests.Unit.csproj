@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\FiszkIt.Domain\FiszkIt.Domain.csproj" />
+      <ProjectReference Include="..\..\FiszkIt.Application\FiszkIt.Application.csproj" />
       <ProjectReference Include="..\FiszkIt.Shared.Tests\FiszkIt.Shared.Tests.csproj" />
     </ItemGroup>
     

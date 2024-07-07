@@ -1,8 +1,10 @@
-namespace FiszkIt.Domain.Tests.Unit.Builders;
+using FiszkIt.Domain;
+
+namespace FiszkIt.Shared.Tests.Builders;
 
 public class FlashSetBuilder
 {
-    private Guid _creaotrId = Guid.NewGuid();
+    private Guid _creatorId = Guid.NewGuid();
     private string _name = "FlashSetTest";
     private List<FlashCard> _flashCards = [];
 
@@ -19,7 +21,7 @@ public class FlashSetBuilder
 
     public FlashSetBuilder WithCreatorId(Guid creatorId)
     {
-        _creaotrId = creatorId;
+        _creatorId = creatorId;
         return this;
     }
 
@@ -31,7 +33,7 @@ public class FlashSetBuilder
 
     public FlashSet Build()
     {
-        var set = FlashSet.Create(_creaotrId, _name).Value;
+        var set = FlashSet.Create(_creatorId, _name).Value;
 
         foreach (var card in _flashCards)
         {
