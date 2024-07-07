@@ -1,4 +1,4 @@
-using System.Text.Json;
+using FiszkIt.Api.Common;
 using FiszkIt.Api.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -28,10 +28,7 @@ public static class RefreshToken
                 { "refresh_token", refreshToken }
             };
             var res = await client.PostAsync(tokenUrl, new FormUrlEncodedContent(dic));
-            var resp = await res.Content.ReadFromJsonAsync<LoginRefreshTokenResponse>(new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-            });
+            var resp = await res.Content.ReadFromJsonAsync<LoginRefreshTokenResponse>(JsonOptions.Snake);
             return resp;
         });
 
