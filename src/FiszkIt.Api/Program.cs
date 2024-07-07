@@ -1,6 +1,7 @@
 using System.Text.Json;
 using FiszkIt.Api.Configuration;
-using FiszkIt.Api.Endpoints;
+using FiszkIt.Api.Endpoints.FlashCardEndpoints;
+using FiszkIt.Api.Endpoints.FlashSetEndpoints;
 using FiszkIt.Api.Responses;
 using FiszkIt.Infrastructure;
 using FiszkIt.Infrastructure.Repository;
