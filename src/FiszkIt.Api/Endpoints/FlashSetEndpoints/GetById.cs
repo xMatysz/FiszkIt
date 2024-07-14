@@ -1,6 +1,6 @@
 using FiszkIt.Api.Common;
-using FiszkIt.Application.Repository;
 using FiszkIt.Application.Repository.Dtos;
+using FiszkIt.Application.Services;
 
 namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
@@ -13,20 +13,15 @@ public static class GetById
         app.MapGet("/flashSets/{flashSetId:guid}", async (
                 Guid flashSetId,
                 HttpContext context,
-                IFlashSetDtoRepository repository,
+                IFlashSetService service,
                 CancellationToken cancellationToken) =>
             {
-                var flashSet = await repository.GetByIdForUserAsync(flashSetId, context.GetUserId(), cancellationToken);
+                var result = await service.GetByIdAsync(flashSetId, context.GetUserId(), cancellationToken);
 
-                if (flashSet is null)
-                {
-                    return Results.NotFound();
-                }
-
-                var response = new FlashSetsGetGetByIdResponse(flashSet.Id, flashSet.CreatorId, flashSet.Name,
-                    flashSet.FlashCards);
-
-                return Results.Ok(response);
+                return result.MatchFirst(
+                    val => Results.Ok(
+                        new FlashSetsGetGetByIdResponse(val.Id, val.CreatorId, val.Name, val.FlashCards)),
+                    err => Results.Problem(title: err.Code, detail: err.Description, statusCode: 400));
             })
             .RequireAuthorization()
             .WithName("flashSets/GetById");

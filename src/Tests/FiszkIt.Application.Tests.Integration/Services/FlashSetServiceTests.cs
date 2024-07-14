@@ -46,4 +46,25 @@ public class FlashSetServiceTests : IntegrationTestsBase
         results.Should().HaveCount(expectedFlashSetDtos.Length);
         results.Should().BeEquivalentTo(expectedFlashSetDtos);
     }
+
+    [Fact]
+    public async Task GetById_Return_FlashSetDto()
+    {
+        var userId = Guid.NewGuid();
+        FlashSet[] flashSets =
+        [
+            new FlashSetBuilder().WithCreatorId(userId).Build(),
+            new FlashSetBuilder().WithCreatorId(userId).Build(),
+            new FlashSetBuilder().WithCreatorId(userId).Build(),
+        ];
+
+        await AssumeEntityInDbAsync(flashSets);
+
+        var targetFlashSet = flashSets[Random.Shared.Next(0, flashSets.Length - 1)];
+        var dto = new FlashSetDto(targetFlashSet);
+
+        var result = await _sut.GetByIdAsync(dto.Id, userId, CancellationToken.None);
+
+        result.Value.Should().BeEquivalentTo(dto);
+    }
 }
