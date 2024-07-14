@@ -4,6 +4,7 @@ using FiszkIt.Api.Endpoints.FlashSetEndpoints;
 using FiszkIt.Api.Endpoints.LoginEndpoints;
 using FiszkIt.Application;
 using FiszkIt.Application.Repository;
+using FiszkIt.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddDbContext<FiszkItDbContext>(
         opt => opt.UseNpgsql(builder.Configuration.GetSection("connectionString").Value));
     builder.Services.AddHttpClient();
+
+    builder.Services.AddScoped<IFlashSetService, FlashSetService>();
 }
 
 var app = builder.Build();

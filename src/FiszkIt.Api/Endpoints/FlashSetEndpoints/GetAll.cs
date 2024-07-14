@@ -1,6 +1,6 @@
 using FiszkIt.Api.Common;
-using FiszkIt.Application.Repository;
 using FiszkIt.Application.Repository.Dtos;
+using FiszkIt.Application.Services;
 
 namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
@@ -12,12 +12,12 @@ public static class GetAll
     {
         app.MapGet("/flashSets", async (
                 HttpContext context,
-                IFlashSetDtoRepository repository,
+                IFlashSetService service,
                 CancellationToken cancellationToken) =>
             {
-                var flashSets = await repository.GetAllForUserAsync(context.GetUserId(), cancellationToken);
-                var response = flashSets
-                    .Select(f => new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));
+                var result = await service.GetAllAsync(context.GetUserId(), cancellationToken);
+                var response = result.Select(f =>
+                    new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));
 
                 return Results.Ok(response);
             })
