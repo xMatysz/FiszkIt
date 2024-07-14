@@ -1,6 +1,7 @@
 using FiszkIt.Application.Repository;
 using FiszkIt.Application.Repository.Dtos;
 using ErrorOr;
+using FiszkIt.Domain;
 
 namespace FiszkIt.Application.Services;
 
@@ -27,6 +28,6 @@ public class FlashSetService : IFlashSetService
     public async Task<ErrorOr<FlashSetDto>> GetByIdAsync(Guid flashSetId, Guid userId, CancellationToken cancellationToken)
     {
         var flashSet = await _flashSetDtoRepository.GetByIdForUserAsync(flashSetId, userId, cancellationToken);
-        return flashSet is not null ? flashSet : Error.NotFound("FlashSet.NotFound", "Flash set was not found");
+        return flashSet is not null ? flashSet : FlashSetErrors.NotFound;
     }
 }
