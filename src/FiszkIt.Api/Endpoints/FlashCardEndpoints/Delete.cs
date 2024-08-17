@@ -13,14 +13,11 @@ public static class Delete
             Guid flashCardId,
             HttpContext context,
             IFlashSetRepository repository,
-            FiszkItDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
             var flashSet = await repository.GetById(context.GetUserId(), flashSetId, cancellationToken);
 
             flashSet.RemoveFlashCard(flashCardId);
-
-            await dbContext.SaveChangesAsync(cancellationToken);
         });
 
         return app;

@@ -15,15 +15,12 @@ public static class Create
             CreateFlashCardRequest request,
             HttpContext context,
             IFlashSetRepository repository,
-            FiszkItDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
             var flashSet = await repository.GetById(context.GetUserId(), request.FlashSetId, cancellationToken);
 
             var flashCard = new FlashCard(request.Question, request.Answer);
             flashSet.AddFlashCard(flashCard);
-
-            await dbContext.SaveChangesAsync(cancellationToken);
         });
 
         return app;

@@ -6,6 +6,12 @@
 GET {{url}}/getLogin
 ###
 
+POST localhost:5000/add
+###
+
+POST localhost:5000/get?user=c8a68e2f-885d-42cf-94ab-898d60c887cd&set=1d1cb460-5d93-4f06-b201-645a21a03081
+###
+
 GET {{url}}/token/{{refreshToken}}
 ###
 

@@ -13,13 +13,9 @@ public static class Delete
                 Guid flashSetId,
                 HttpContext context,
                 IFlashSetRepository repository,
-                FiszkItDbContext dbContext,
                 CancellationToken cancellationToken) =>
             {
                 var flashSet = await repository.GetById(context.GetUserId(), flashSetId, cancellationToken);
-
-                dbContext.Remove(flashSet);
-                await dbContext.SaveChangesAsync(cancellationToken);
 
                 return Results.NoContent();
             })
