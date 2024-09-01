@@ -19,9 +19,8 @@ public static class GetById
                 var result = await service.GetByIdAsync(flashSetId, context.GetUserId(), cancellationToken);
 
                 return result.MatchFirst(
-                    val => Results.Ok(
-                        new FlashSetsGetGetByIdResponse(val.Id, val.CreatorId, val.Name, val.FlashCards)),
-                    err => Results.Problem(title: err.Code, detail: err.Description, statusCode: 400));
+                    val => Results.Ok(new FlashSetsGetGetByIdResponse(val.Id, val.CreatorId, val.Name, val.FlashCards)),
+                    ResultsV2.Problem);
             })
             .RequireAuthorization()
             .WithName("flashSets/GetById");

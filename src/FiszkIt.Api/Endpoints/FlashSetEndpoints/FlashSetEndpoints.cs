@@ -12,18 +12,6 @@ public static class FlashSetEndpoints
             .MapCreate()
             .MapDelete();
 
-        app.MapPost("/add", async () =>
-        {
-            var repo = new FlashSetDynamoDbRepository();
-            await repo.AddAsync(FlashSet.Create(Guid.NewGuid(), "TEST").Value, default);
-        });
-        
-        app.MapPost("/get", async (Guid user, Guid set) =>
-        {
-            var repo = new FlashSetDynamoDbRepository();
-            await repo.GetById(user, set, default);
-        });
-
         return app;
     }
 }

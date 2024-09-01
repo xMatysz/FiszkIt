@@ -15,9 +15,10 @@ public static class GetAll
                 IFlashSetService service,
                 CancellationToken cancellationToken) =>
             {
-                var result = await service.GetAllAsync(context.GetUserId(), cancellationToken);
-                var response = result.Select(f =>
-                    new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));
+                var result = await service.GetAllForUserAsync(context.GetUserId(), cancellationToken);
+
+                var response = result
+                    .Select(f => new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));
 
                 return Results.Ok(response);
             })

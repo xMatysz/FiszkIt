@@ -1,13 +1,8 @@
 namespace FiszkIt.Core;
 
-public abstract class Entity
+public abstract class Entity(Guid id)
 {
-    public Guid Id { get; }
-
-    protected Entity(Guid id)
-    {
-        Id = id;
-    }
+    public Guid Id { get; init; } = id;
 
     public override bool Equals(object? obj)
     {
@@ -23,6 +18,4 @@ public abstract class Entity
     {
         return Id.GetHashCode();
     }
-
-    protected Entity(){}
 }

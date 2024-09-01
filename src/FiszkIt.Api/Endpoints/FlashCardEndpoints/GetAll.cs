@@ -15,9 +15,17 @@ public static class GetAll
             IFlashSetRepository repository,
             CancellationToken cancellationToken) =>
         {
-            var flashSet = await repository.GetById(context.GetUserId(), flashSetId, cancellationToken);
+            var flashSet = await repository.GetForUserById(context.GetUserId(), flashSetId, cancellationToken);
 
-            return flashSet.FlashCards.Select(x => new FlashCartGetAllResponse(x.Id, x.Question, x.Answer));
+            if (flashSet is null)
+            {
+                return Results.NotFound("WTf");
+            }
+
+            var response = flashSet.FlashCards
+                .Select(x => new FlashCartGetAllResponse(x.Id, x.Question, x.Answer));
+            
+            return Results.Ok(response);
         });
 
         return app;

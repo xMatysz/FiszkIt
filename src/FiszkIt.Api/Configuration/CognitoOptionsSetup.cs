@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 
 namespace FiszkIt.Api.Configuration;
 
-public class CognitoOptionsConfigure(IConfiguration configuration) : IConfigureNamedOptions<CognitoOptions>
+public class CognitoOptionsSetup(IConfiguration configuration) : IConfigureNamedOptions<CognitoOptions>
 {
     private const string ConfigurationSectionName = "Cognito";
 

@@ -15,9 +15,9 @@ public static class Delete
             IFlashSetRepository repository,
             CancellationToken cancellationToken) =>
         {
-            var flashSet = await repository.GetById(context.GetUserId(), flashSetId, cancellationToken);
+            var flashSet = await repository.GetForUserById(context.GetUserId(), flashSetId, cancellationToken);
 
-            flashSet.RemoveFlashCard(flashCardId);
+            // flashSet.RemoveFlashCard(flashCardId);
         });
 
         return app;

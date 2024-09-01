@@ -1,19 +1,15 @@
+using FiszkIt.Application.Repository.Items;
 using FiszkIt.Domain;
 
 namespace FiszkIt.Application.Repository.Dtos;
 
-public class FlashSetDto
+public record FlashSetDto(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCards)
 {
-    public Guid Id { get; set; }
-    public Guid CreatorId { get; set; }
-    public string Name { get; set; }
-    public FlashCardDto[] FlashCards { get; set; }
-
-    public FlashSetDto(FlashSet set)
+    public FlashSetDto(FlashSetItem set)
+        : this(set.Id, set.CreatorId, set.Name, ConvertToDtos(set.FlashCards))
     {
-        Id = set.Id;
-        CreatorId = set.CreatorId;
-        Name = set.Name;
-        FlashCards = set.FlashCards.Select(f=>new FlashCardDto(f)).ToArray();
     }
+
+    private static FlashCardDto[] ConvertToDtos(IEnumerable<FlashCard> setFlashCards)
+        => setFlashCards.Select(x => new FlashCardDto(x)).ToArray();
 }

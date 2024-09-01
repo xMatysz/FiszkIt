@@ -3,8 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace FiszkIt.Api.Configuration;
 
-public class JwtBearerOptionsConfigure(IConfiguration configuration)
-    : IConfigureNamedOptions<JwtBearerOptions>
+public class JwtBearerOptionsSetup(IConfiguration configuration) : IConfigureNamedOptions<JwtBearerOptions>
 {
     private const string ConfigurationSectionName = "JwtBearer";
 

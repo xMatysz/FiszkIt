@@ -17,10 +17,10 @@ public static class Create
             IFlashSetRepository repository,
             CancellationToken cancellationToken) =>
         {
-            var flashSet = await repository.GetById(context.GetUserId(), request.FlashSetId, cancellationToken);
+            var flashSet = await repository.GetForUserById(context.GetUserId(), request.FlashSetId, cancellationToken);
 
             var flashCard = new FlashCard(request.Question, request.Answer);
-            flashSet.AddFlashCard(flashCard);
+            // flashSet.AddFlashCard(flashCard);
         });
 
         return app;

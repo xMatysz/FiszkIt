@@ -7,8 +7,8 @@ namespace FiszkIt.Domain;
 public class FlashSet : Entity
 {
     private readonly List<FlashCard> _flashCards = new();
-    public IReadOnlyCollection<FlashCard> FlashCards => _flashCards.AsReadOnly();
 
+    public IReadOnlyCollection<FlashCard> FlashCards => _flashCards.AsReadOnly();
     public Guid CreatorId { get; init; }
     public string Name { get; init; }
 
@@ -37,9 +37,5 @@ public class FlashSet : Entity
     public void RemoveFlashCard(Guid flashCardId)
     {
         _flashCards.RemoveAll(f => f.Id == flashCardId);
-    }
-
-    private FlashSet()
-    {
     }
 }
