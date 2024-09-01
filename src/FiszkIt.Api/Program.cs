@@ -1,6 +1,5 @@
 using Amazon.DynamoDBv2;
 using FiszkIt.Api.Configuration;
-using FiszkIt.Api.Endpoints.FlashCardEndpoints;
 using FiszkIt.Api.Endpoints.FlashSetEndpoints;
 using FiszkIt.Api.Endpoints.LoginEndpoints;
 using FiszkIt.Application.Repository;
@@ -33,8 +32,7 @@ var app = builder.Build();
 
     app
         .RegisterLoginEndpoints()
-        .RegisterFlashSetEndpoints()
-        .RegisterFlashCardEndpoints();
+        .RegisterFlashSetEndpoints();
 }
 
 app.Run();
