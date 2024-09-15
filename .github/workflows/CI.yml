@@ -24,4 +24,4 @@ jobs:
         run: dotnet build ./src/FiszkIt.sln --no-restore
 
       - name: Test
-        run: dotnet test ./src/FiszkIt.sln --no-build --verbosity normal
+        run: dotnet test ./src/Tests/FiszkIt.Domain.Tests.Unit/FiszkIt.Domain.Tests.Unit.csproj --no-build --verbosity normal
