@@ -1,4 +1,6 @@
+using FiszkIt.Domain.FlashSetEntity;
 using FiszkIt.Shared.Tests.Builders;
+using FiszkIt.Tests.Shared.Builders;
 using FluentAssertions;
 using Xunit;
 
@@ -40,7 +42,7 @@ public class FlashSetSpecificationTests
     public void AddFlashCard_Should_AddFlashCardToCollection()
     {
         var flashSet = FlashSetBuilder.Default().Build();
-        var flashCard = new FlashCard("q", "a");
+        var flashCard = FlashCardBuilder.Default.Build();
 
         flashSet.AddFlashCard(flashCard);
 
@@ -51,7 +53,7 @@ public class FlashSetSpecificationTests
     [Fact]
     public void RemoveFlashCard_Should_RemoveFlashCardFromCollection()
     {
-        var flashCard = new FlashCard("q", "a");
+        var flashCard = FlashCardBuilder.Default.Build();
         var flashSet = FlashSetBuilder.Default().WithFlashCards(flashCard).Build();
 
         flashSet.RemoveFlashCard(flashCard.Id);

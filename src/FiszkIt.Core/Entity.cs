@@ -18,4 +18,9 @@ public abstract class Entity(Guid id)
     {
         return Id.GetHashCode();
     }
+
+    protected Entity()
+        : this(Guid.Empty)
+    {
+    }
 }

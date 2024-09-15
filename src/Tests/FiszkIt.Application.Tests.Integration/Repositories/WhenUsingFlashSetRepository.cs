@@ -1,8 +1,10 @@
 using Amazon.DynamoDBv2.Model;
+using ErrorOr;
 using FiszkIt.Application.Repository;
 using FiszkIt.Application.Repository.Dtos;
 using FiszkIt.Application.Repository.Items;
-using FiszkIt.Domain;
+using FiszkIt.Domain.FlashCardEntity;
+using FiszkIt.Domain.FlashSetEntity;
 using FiszkIt.Shared.Tests.Builders;
 using FiszkIt.Tests.Shared.Builders;
 using FluentAssertions;
@@ -32,11 +34,12 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
 
         var result = await _flashSetRepository.GetForUserById(flashSet.CreatorId, flashSet.Id, CancellationToken.None);
 
-        result.Should().NotBeNull();
-        result!.Id.Should().Be(flashSet.Id);
-        result.CreatorId.Should().Be(flashSet.CreatorId);
-        result.Name.Should().Be(flashSet.Name);
-        result.FlashCards.Should().BeEquivalentTo(flashSet.FlashCards.Select(x => new FlashCardDto(x)));
+        result.IsError.Should().BeFalse();
+        var set = result.Value;
+        set.Id.Should().Be(flashSet.Id);
+        set.CreatorId.Should().Be(flashSet.CreatorId);
+        set.Name.Should().Be(flashSet.Name);
+        set.FlashCards.Should().BeEquivalentTo(flashSet.FlashCards.Select(x => new FlashCardDto(x)));
     }
 
     [Fact]
@@ -46,7 +49,7 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
             .WithFlashCards(FlashCardBuilder.Default.Build())
             .Build();
 
-        await _flashSetRepository.AddAsync(flashSet, CancellationToken.None);
+        await _flashSetRepository.AddAsync(flashSet.CreatorId, flashSet, CancellationToken.None);
 
         var request = new ScanRequest { TableName = ApplicationOptions.Value.TableName };
         var result = await DynamoDbClient.ScanAsync(request);
@@ -62,7 +65,7 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
 
         await PutItemIntoDynamoDb(flashSet);
 
-        var result = await _flashSetRepository.AddAsync(flashSet, CancellationToken.None);
+        var result = await _flashSetRepository.AddAsync(flashSet.CreatorId, flashSet, CancellationToken.None);
         result.IsError.Should().BeTrue();
         result.FirstError.Should().Be(FlashSetErrors.AlreadyExist);
     }
@@ -93,7 +96,7 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
         var flashSet = new FlashSetBuilder()
             .Build();
 
-        var act = () => _flashSetRepository.AddAsync(flashSet, CancellationToken.None);
+        var act = () => _flashSetRepository.AddAsync(flashSet.CreatorId, flashSet, CancellationToken.None);
 
         await act.Should().NotThrowAsync();
     }
@@ -138,7 +141,7 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
 
         var result = await _flashSetRepository.RemoveAsync(flashSet.CreatorId, flashSet.Id, CancellationToken.None);
 
-        result.Should().BeTrue();
+        result.Value.Should().Be(Result.Deleted);
 
         var request = new ScanRequest { TableName = ApplicationOptions.Value.TableName };
         var scanResult = await DynamoDbClient.ScanAsync(request);
@@ -152,7 +155,7 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
 
         var result = await _flashSetRepository.RemoveAsync(flashSet.CreatorId, flashSet.Id, CancellationToken.None);
 
-        result.Should().BeFalse();
+        result.IsError.Should().BeTrue();
     }
 
     private async Task PutItemIntoDynamoDb(FlashSet flashSet)

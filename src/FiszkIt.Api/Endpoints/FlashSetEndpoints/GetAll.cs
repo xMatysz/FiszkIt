@@ -12,10 +12,10 @@ public static class GetAll
     {
         app.MapGet("/flashSets", async (
                 HttpContext context,
-                IFlashSetService service,
+                IFlashSetService flashSetService,
                 CancellationToken cancellationToken) =>
             {
-                var result = await service.GetAllForUserAsync(context.GetUserId(), cancellationToken);
+                var result = await flashSetService.GetAllForUserAsync(context.GetUserId(), cancellationToken);
 
                 var response = result
                     .Select(f => new FlashSetsGetAllResponse(f.Id, f.CreatorId, f.Name, f.FlashCards));

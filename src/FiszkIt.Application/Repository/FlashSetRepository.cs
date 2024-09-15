@@ -1,23 +1,24 @@
-using System.Net;
 using System.Text.Json;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
 using ErrorOr;
 using FiszkIt.Application.Configuration;
-using FiszkIt.Domain;
 using FiszkIt.Application.Repository.Dtos;
 using FiszkIt.Application.Repository.Items;
+using FiszkIt.Domain.FlashCardEntity;
+using FiszkIt.Domain.FlashSetEntity;
 using Microsoft.Extensions.Options;
 
 namespace FiszkIt.Application.Repository;
 
 public interface IFlashSetRepository
 {
-    Task<ErrorOr<FlashSetDto>> AddAsync(FlashSet flashSet, CancellationToken cancellationToken);
-    Task<FlashSetDto?> GetForUserById(Guid userId, Guid flashSetId, CancellationToken cancellationToken);
-    Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken none);
-    Task<bool> RemoveAsync(Guid userId, Guid flashSetId, CancellationToken cancellationToken);
+    Task<ErrorOr<FlashSetDto>> AddAsync(Guid userId, FlashSet flashSet, CancellationToken cancellationToken);
+    Task<ErrorOr<FlashSetDto>> GetForUserById(Guid userId, Guid flashSetId, CancellationToken cancellationToken);
+    Task<FlashSetDto[]> GetAllForUser(Guid userId, CancellationToken cancellationToken);
+    Task<ErrorOr<Deleted>> RemoveAsync(Guid userId, Guid flashSetId, CancellationToken cancellationToken);
+    Task<ErrorOr<Updated>> UpdateAsync(Guid userId, FlashSet flashSet, CancellationToken cancellationToken);
 }
 
 public class FlashSetRepository : IFlashSetRepository
@@ -31,9 +32,9 @@ public class FlashSetRepository : IFlashSetRepository
         _appOptions = appOptions;
     }
 
-    public async Task<ErrorOr<FlashSetDto>> AddAsync(FlashSet flashSet, CancellationToken cancellationToken)
+    public async Task<ErrorOr<FlashSetDto>> AddAsync(Guid userId, FlashSet flashSet, CancellationToken cancellationToken)
     {
-        var item = new FlashSetItem(flashSet);
+        var item = new FlashSetItem(userId, flashSet);
 
         var cards = MapCards(item.FlashCards);
 
@@ -76,7 +77,7 @@ public class FlashSetRepository : IFlashSetRepository
         });
     }
 
-    public async Task<FlashSetDto?> GetForUserById(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
+    public async Task<ErrorOr<FlashSetDto>> GetForUserById(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
     {
         var pk = FlashSetItem.CreatePk(userId);
         var sk = FlashSetItem.CreateSk(flashSetId);
@@ -94,7 +95,7 @@ public class FlashSetRepository : IFlashSetRepository
         var response = await _client.GetItemAsync(request, cancellationToken);
 
         return !response.IsItemSet
-            ? null
+            ? FlashSetErrors.NotFound
             : ConvertToDto(response.Item);
     }
 
@@ -121,7 +122,7 @@ public class FlashSetRepository : IFlashSetRepository
             .ToArray();
     }
 
-    public async Task<bool> RemoveAsync(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Deleted>> RemoveAsync(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
     {
         var request = new DeleteItemRequest
         {
@@ -136,12 +137,44 @@ public class FlashSetRepository : IFlashSetRepository
 
         try
         {
-            var response = await _client.DeleteItemAsync(request, cancellationToken);
-            return response.HttpStatusCode == HttpStatusCode.OK;
+            await _client.DeleteItemAsync(request, cancellationToken);
+            return Result.Deleted;
         }
         catch (ConditionalCheckFailedException)
         {
-            return false;
+            return FlashSetErrors.NotExist;
+        }
+    }
+
+    public async Task<ErrorOr<Updated>> UpdateAsync(Guid userId, FlashSet flashSet, CancellationToken cancellationToken)
+    {
+        var item = new FlashSetItem(userId, flashSet);
+
+        var cards = MapCards(item.FlashCards);
+
+        var request = new PutItemRequest
+        {
+            TableName = _appOptions.Value.TableName,
+            Item = new Dictionary<string, AttributeValue>
+            {
+                { nameof(FlashSetItem.PK), new AttributeValue { S = item.PK } },
+                { nameof(FlashSetItem.SK), new AttributeValue { S = item.SK } },
+                { nameof(FlashSetItem.Id), new AttributeValue { S = item.Id.ToString() } },
+                { nameof(FlashSetItem.CreatorId), new AttributeValue { S = item.CreatorId.ToString() } },
+                { nameof(FlashSetItem.Name), new AttributeValue { S = item.Name } },
+                { nameof(FlashSetItem.FlashCards), new AttributeValue { L = cards.ToList(), IsLSet = true} },
+            },
+            ConditionExpression = "attribute_exists(PK) and attribute_exists(SK)"
+        };
+
+        try
+        {
+            await _client.PutItemAsync(request, cancellationToken);
+            return Result.Updated;
+        }
+        catch (ConditionalCheckFailedException)
+        {
+            return FlashSetErrors.NotExist;
         }
     }
 

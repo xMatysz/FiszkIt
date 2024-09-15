@@ -16,7 +16,7 @@ public static class GetById
                 IFlashSetService service,
                 CancellationToken cancellationToken) =>
             {
-                var result = await service.GetByIdAsync(flashSetId, context.GetUserId(), cancellationToken);
+                var result = await service.GetByIdAsync(context.GetUserId(), flashSetId, cancellationToken);
 
                 return result.MatchFirst(
                     val => Results.Ok(new FlashSetsGetGetByIdResponse(val.Id, val.CreatorId, val.Name, val.FlashCards)),

@@ -1,4 +1,4 @@
-using FiszkIt.Domain;
+using FiszkIt.Domain.FlashCardEntity;
 
 namespace FiszkIt.Tests.Shared.Builders;
 
@@ -26,7 +26,7 @@ public class FlashCardBuilder
 
     public FlashCard Build()
     {
-        return new FlashCard(_question, _answer);
+        return FlashCard.Create(_question, _answer).Value;
     }
 
 }

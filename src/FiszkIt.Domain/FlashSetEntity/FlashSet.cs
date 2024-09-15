@@ -1,8 +1,9 @@
 using ErrorOr;
 using FiszkIt.Core;
 using FiszkIt.Core.Extensions;
+using FiszkIt.Domain.FlashCardEntity;
 
-namespace FiszkIt.Domain;
+namespace FiszkIt.Domain.FlashSetEntity;
 
 public class FlashSet : Entity
 {
@@ -12,8 +13,8 @@ public class FlashSet : Entity
     public Guid CreatorId { get; init; }
     public string Name { get; init; }
 
-    private FlashSet(Guid userId, string name)
-        : base(Guid.NewGuid())
+    private FlashSet(Guid userId, string name, Guid? id = null)
+        : base(id ?? Guid.NewGuid())
     {
         CreatorId = userId;
         Name = name;
@@ -23,7 +24,7 @@ public class FlashSet : Entity
     {
         if (name.IsNullOrEmpty())
         {
-            return Error.Validation();
+            return FlashSetErrors.NameCannotBeEmpty;
         }
 
         return new FlashSet(creatorId, name);
@@ -37,5 +38,16 @@ public class FlashSet : Entity
     public void RemoveFlashCard(Guid flashCardId)
     {
         _flashCards.RemoveAll(f => f.Id == flashCardId);
+    }
+
+    public static FlashSet CreatePerfect(Guid id, string name, Guid creatorId, IEnumerable<FlashCard> flashCards)
+    {
+        var set = new FlashSet(creatorId, name, id);
+        foreach (var flashCard in flashCards)
+        {
+            set.AddFlashCard(flashCard);
+        }
+
+        return set;
     }
 }

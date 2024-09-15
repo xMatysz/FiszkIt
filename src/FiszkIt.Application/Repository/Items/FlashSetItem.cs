@@ -1,16 +1,13 @@
 using FiszkIt.Domain;
+using FiszkIt.Domain.FlashCardEntity;
+using FiszkIt.Domain.FlashSetEntity;
 
 namespace FiszkIt.Application.Repository.Items;
 
 public record FlashSetItem(string PK, string SK, Guid Id, Guid CreatorId, string Name, FlashCard[] FlashCards)
 {
-    public FlashSetItem(FlashSet flashSet)
-        : this(CreatePk(flashSet), CreateSk(flashSet), flashSet.Id, flashSet.CreatorId, flashSet.Name, flashSet.FlashCards.ToArray())
-    {
-    }
-
-    public FlashSetItem()
-        : this(string.Empty, string.Empty, Guid.Empty, Guid.Empty, string.Empty, [])
+    public FlashSetItem(Guid userId, FlashSet flashSet)
+        : this(CreatePk(userId), CreateSk(flashSet), flashSet.Id, flashSet.CreatorId, flashSet.Name, flashSet.FlashCards.ToArray())
     {
     }
 
@@ -25,4 +22,10 @@ public record FlashSetItem(string PK, string SK, Guid Id, Guid CreatorId, string
 
     private static string CreateSk(FlashSet flashSet)
         => CreateSk(flashSet.Id);
+
+    // required for deserialization
+    public FlashSetItem()
+        : this(string.Empty, string.Empty, Guid.Empty, Guid.Empty, string.Empty, [])
+    {
+    }
 }

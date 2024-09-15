@@ -1,17 +1,21 @@
-using FiszkIt.Domain;
+using FiszkIt.Domain.FlashCardEntity;
 
 namespace FiszkIt.Application.Repository.Dtos;
 
-public class FlashCardDto
+public record FlashCardDto(Guid Id, string Question, string Answer)
 {
-    public Guid Id { get; set; }
-    public string Question { get; set; }
-    public string Answer { get; set; }
-
     public FlashCardDto(FlashCard card)
+        : this(card.Id, card.Question, card.Answer)
     {
-        Id = card.Id;
-        Question = card.Question;
-        Answer = card.Answer;
+    }
+
+    public FlashCardDto()
+        : this(Guid.Empty, string.Empty, string.Empty)
+    {
+    }
+
+    public FlashCard ToEntity()
+    {
+        return FlashCard.CreatePerfect(Id, Question, Answer);
     }
 }

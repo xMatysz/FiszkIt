@@ -16,8 +16,8 @@ public static class Delete
                 var result = await flashSetService.RemoveFlashSetAsync(context.GetUserId(), flashSetId, cancellationToken);
 
                 return result.MatchFirst(
-                    val => Results.NoContent(),
-                    err => Results.NotFound());
+                    Results.Ok,
+                    ResultsV2.Problem);
             })
             .RequireAuthorization()
             .WithName("flashSets/delete");

@@ -1,5 +1,3 @@
 namespace FiszkIt.Api;
 
-public interface IWebAppMarker
-{
-}
+public interface IWebAppMarker;

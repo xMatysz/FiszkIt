@@ -1,6 +1,4 @@
 using FiszkIt.Api.Common;
-using FiszkIt.Domain;
-using FiszkIt.Application.Repository;
 using FiszkIt.Application.Repository.Dtos;
 using FiszkIt.Application.Services;
 
