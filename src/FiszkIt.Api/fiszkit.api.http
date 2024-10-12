@@ -2,6 +2,14 @@
 @flashCardId = 2
 
 ###################################
+POST http://localhost:5000/user
+###
+
+POST http://localhost:5000/user/auth?passowrd=NewPassTest123!@#
+###
+
+POST http://localhost:5000/user/resp
+###
 
 GET {{url}}/getLogin
 ###

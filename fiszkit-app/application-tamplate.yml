@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for fiszkit applicationæ
+
+Globals:
+  Function:
+    Timeout: 100
+    MemorySize: 1024
+    LoggingConfig:
+      LogFormat: JSON
+
+Resources:
+
+  FiszkItLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: FiszkIt-Api
+      Description: Api for FiszkIt
+      CodeUri: ./../src/FiszkIt.Api/
+      Handler: FiszkIt.Api
+      Runtime: dotnet8
+      FunctionUrlConfig:
+        AuthType: NONE
+        InvokeMode: BUFFERED
+      

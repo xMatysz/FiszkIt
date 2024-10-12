@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Template for application with cognito auth
+
+Parameters:
+
+  ApplicationName:
+    Type: String
+    Description: Application name
+
+  Environment:
+    Type: String
+    Default: Development
+    Description: Environment to deploy
+
+Resources:
+
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub '${ApplicationName}-UserPool'
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+      UsernameAttributes:
+        - email
+      Schema:
+        - AttributeDataType: String
+          Name: email
+          Required: false
+
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref CognitoUserPool
+      ClientName: !Sub '${ApplicationName}-UserPool-Client'
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_ADMIN_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+
+  ClientIdParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: !Sub '/${ApplicationName}/${Environment}/Cognito/ClientId'
+      Value: !Ref CognitoUserPoolClient
+
+  UserPoolIdParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: !Sub '/${ApplicationName}/${Environment}/Cognito/UserPoolId'
+      Value: !Ref CognitoUserPool
+
+  FiszkItApplication:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: ./application-tamplate.yml
