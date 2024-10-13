@@ -2,13 +2,13 @@ using System.Net;
 using Amazon.CognitoIdentityProvider;
 using Amazon.CognitoIdentityProvider.Model;
 using FiszkIt.Api.Configuration;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace FiszkIt.Api.Endpoints.AuthEndpoints;
 
 public static class LoginUser
 {
-    //TODO: exeptions
     public static IEndpointRouteBuilder MapLoginUser(this IEndpointRouteBuilder app)
     {
         app.MapPost("/login", async (
@@ -26,11 +26,22 @@ public static class LoginUser
                 flowType = AuthFlowType.REFRESH_TOKEN_AUTH;
                 authParameters.Add("REFRESH_TOKEN", token);
             }
-            else
+            else if (email is not null && password is not null)
             {
                 flowType = AuthFlowType.ADMIN_USER_PASSWORD_AUTH;
                 authParameters.Add("USERNAME", email);
                 authParameters.Add("PASSWORD", password);
+            }
+            else
+            {
+                var problemDetails = new ProblemDetails
+                {
+                    Status = (int)HttpStatusCode.BadRequest,
+                    Title = "Parameters not specified",
+                    Detail = $"{nameof(token)} or {email} and {password} mus be specified"
+                };
+
+                return Results.Problem(problemDetails);
             }
 
             var initAuthRequest = new AdminInitiateAuthRequest

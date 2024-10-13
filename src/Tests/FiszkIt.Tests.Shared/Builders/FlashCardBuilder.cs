@@ -28,5 +28,4 @@ public class FlashCardBuilder
     {
         return FlashCard.Create(_question, _answer).Value;
     }
-
 }

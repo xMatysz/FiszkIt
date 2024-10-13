@@ -48,7 +48,7 @@ public class FlashSetRepository : IFlashSetRepository
                 { nameof(FlashSetItem.Id), new AttributeValue { S = item.Id.ToString() } },
                 { nameof(FlashSetItem.CreatorId), new AttributeValue { S = item.CreatorId.ToString() } },
                 { nameof(FlashSetItem.Name), new AttributeValue { S = item.Name } },
-                { nameof(FlashSetItem.FlashCards), new AttributeValue { L = cards.ToList(), IsLSet = true} },
+                { nameof(FlashSetItem.FlashCards), new AttributeValue { L = cards.ToList(), IsLSet = true } },
             },
             ConditionExpression = "attribute_not_exists(PK) and attribute_not_exists(SK)"
         };
@@ -64,19 +64,6 @@ public class FlashSetRepository : IFlashSetRepository
         }
     }
 
-    private static IEnumerable<AttributeValue> MapCards(FlashCard[] flashCards)
-    {
-        return flashCards.Select(x => new AttributeValue
-        {
-            M = new Dictionary<string, AttributeValue>
-            {
-                { nameof(x.Id), new AttributeValue { S = x.Id.ToString() } },
-                { nameof(x.Question), new AttributeValue { S = x.Question } },
-                { nameof(x.Answer), new AttributeValue { S = x.Answer } },
-            }
-        });
-    }
-
     public async Task<ErrorOr<FlashSetDto>> GetForUserById(Guid userId, Guid flashSetId, CancellationToken cancellationToken)
     {
         var pk = FlashSetItem.CreatePk(userId);
@@ -84,7 +71,7 @@ public class FlashSetRepository : IFlashSetRepository
 
         var request = new GetItemRequest
         {
-            TableName =  _appOptions.Value.TableName,
+            TableName = _appOptions.Value.TableName,
             Key = new Dictionary<string, AttributeValue>
             {
                 { nameof(FlashSetItem.PK), new AttributeValue { S = pk } },
@@ -162,7 +149,7 @@ public class FlashSetRepository : IFlashSetRepository
                 { nameof(FlashSetItem.Id), new AttributeValue { S = item.Id.ToString() } },
                 { nameof(FlashSetItem.CreatorId), new AttributeValue { S = item.CreatorId.ToString() } },
                 { nameof(FlashSetItem.Name), new AttributeValue { S = item.Name } },
-                { nameof(FlashSetItem.FlashCards), new AttributeValue { L = cards.ToList(), IsLSet = true} },
+                { nameof(FlashSetItem.FlashCards), new AttributeValue { L = cards.ToList(), IsLSet = true } },
             },
             ConditionExpression = "attribute_exists(PK) and attribute_exists(SK)"
         };
@@ -176,6 +163,19 @@ public class FlashSetRepository : IFlashSetRepository
         {
             return FlashSetErrors.NotExist;
         }
+    }
+
+    private static IEnumerable<AttributeValue> MapCards(FlashCard[] flashCards)
+    {
+        return flashCards.Select(x => new AttributeValue
+        {
+            M = new Dictionary<string, AttributeValue>
+            {
+                { nameof(x.Id), new AttributeValue { S = x.Id.ToString() } },
+                { nameof(x.Question), new AttributeValue { S = x.Question } },
+                { nameof(x.Answer), new AttributeValue { S = x.Answer } },
+            }
+        });
     }
 
     private static FlashSetDto ConvertToDto(Dictionary<string, AttributeValue> item)

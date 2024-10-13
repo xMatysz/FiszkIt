@@ -9,8 +9,8 @@ public class FlashCard : Entity
     public string Question { get; set; }
     public string Answer { get; set; }
 
-    private FlashCard(string question, string answer)
-        : base(Guid.NewGuid())
+    private FlashCard(string question, string answer, Guid? id = null)
+        : base(id ?? Guid.NewGuid())
     {
         Question = question;
         Answer = answer;
@@ -27,6 +27,9 @@ public class FlashCard : Entity
 
         return new FlashCard(question, answer);
     }
+
+    public static FlashCard CreatePerfect(Guid id, string question, string answer) =>
+        new(question, answer, id);
 
     public ErrorOr<Updated> Update(string question, string answer)
     {
@@ -58,21 +61,5 @@ public class FlashCard : Entity
         }
 
         return errors.Count == 0 ? Result.Success : errors;
-    }
-
-    public FlashCard()
-    {
-    }
-
-    private FlashCard(Guid id, string question, string answer)
-        : base(id)
-    {
-        Question = question;
-        Answer = answer;
-    }
-
-    public static FlashCard CreatePerfect(Guid id, string question, string answer)
-    {
-        return new FlashCard(id, question, answer);
     }
 }

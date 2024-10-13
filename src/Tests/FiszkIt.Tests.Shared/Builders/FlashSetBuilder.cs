@@ -1,7 +1,7 @@
 using FiszkIt.Domain.FlashCardEntity;
 using FiszkIt.Domain.FlashSetEntity;
 
-namespace FiszkIt.Shared.Tests.Builders;
+namespace FiszkIt.Tests.Shared.Builders;
 
 public class FlashSetBuilder
 {

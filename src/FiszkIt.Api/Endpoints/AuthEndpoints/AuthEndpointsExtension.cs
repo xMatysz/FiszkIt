@@ -1,6 +1,6 @@
 namespace FiszkIt.Api.Endpoints.AuthEndpoints;
 
-public static class AuthEndpoints
+public static class AuthEndpointsExtension
 {
     public static IEndpointRouteBuilder RegisterAuthEndpoints(this IEndpointRouteBuilder app)
     {

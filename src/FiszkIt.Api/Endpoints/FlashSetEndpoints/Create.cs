@@ -6,8 +6,8 @@ namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
 public static class Create
 {
-    private record FlashSetsCreateRequest(string Name);
-    private record FlashSetsCreateResponse(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCardDtos);
+    private sealed record FlashSetsCreateRequest(string Name);
+    private sealed record FlashSetsCreateResponse(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCardDtos);
     public static IEndpointRouteBuilder MapCreate(this IEndpointRouteBuilder app)
     {
         app.MapPost("/flashSets", async (
@@ -16,7 +16,8 @@ public static class Create
                 IFlashSetService flashSetService,
                 CancellationToken cancellationToken) =>
             {
-                var result = await flashSetService.CreateFlashSet(context.GetUserId(), request.Name, cancellationToken);
+                var result = await flashSetService
+                    .CreateFlashSet(context.GetUserId(), request.Name, cancellationToken);
 
                 if (result.IsError)
                 {

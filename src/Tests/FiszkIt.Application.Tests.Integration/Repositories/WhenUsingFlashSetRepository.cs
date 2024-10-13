@@ -5,7 +5,6 @@ using FiszkIt.Application.Repository.Dtos;
 using FiszkIt.Application.Repository.Items;
 using FiszkIt.Domain.FlashCardEntity;
 using FiszkIt.Domain.FlashSetEntity;
-using FiszkIt.Shared.Tests.Builders;
 using FiszkIt.Tests.Shared.Builders;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,26 +67,6 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
         var result = await _flashSetRepository.AddAsync(flashSet.CreatorId, flashSet, CancellationToken.None);
         result.IsError.Should().BeTrue();
         result.FirstError.Should().Be(FlashSetErrors.AlreadyExist);
-    }
-
-    private bool ValidateItem(Dictionary<string, AttributeValue> item, FlashSet expectedSet)
-    {
-        return item[nameof(FlashSet.Id)].S == expectedSet.Id.ToString() &&
-               item[nameof(FlashSet.CreatorId)].S == expectedSet.CreatorId.ToString() &&
-               item[nameof(FlashSet.Name)].S == expectedSet.Name &&
-               ValidateCards(item[nameof(FlashSet.FlashCards)].L, expectedSet.FlashCards);
-    }
-
-    private bool ValidateCards(List<AttributeValue> attributeValues, IReadOnlyCollection<FlashCard> expectedSetFlashCards)
-    {
-        return attributeValues.All(attribute =>
-        {
-            var cardItem = attribute.M;
-            var card = expectedSetFlashCards.First(c => c.Id.ToString() == cardItem[nameof(FlashCard.Id)].S);
-
-            return cardItem[nameof(FlashCard.Question)].S == card.Question &&
-                    cardItem[nameof(FlashCard.Answer)].S == card.Answer;
-        });
     }
 
     [Fact]
@@ -158,6 +137,26 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
         result.IsError.Should().BeTrue();
     }
 
+    private bool ValidateItem(Dictionary<string, AttributeValue> item, FlashSet expectedSet)
+    {
+        return item[nameof(FlashSet.Id)].S == expectedSet.Id.ToString() &&
+               item[nameof(FlashSet.CreatorId)].S == expectedSet.CreatorId.ToString() &&
+               item[nameof(FlashSet.Name)].S == expectedSet.Name &&
+               ValidateCards(item[nameof(FlashSet.FlashCards)].L, expectedSet.FlashCards);
+    }
+
+    private static bool ValidateCards(List<AttributeValue> attributeValues, IReadOnlyCollection<FlashCard> expectedSetFlashCards)
+    {
+        return attributeValues.All(attribute =>
+        {
+            var cardItem = attribute.M;
+            var card = expectedSetFlashCards.First(c => c.Id.ToString() == cardItem[nameof(FlashCard.Id)].S);
+
+            return cardItem[nameof(FlashCard.Question)].S == card.Question &&
+                   cardItem[nameof(FlashCard.Answer)].S == card.Answer;
+        });
+    }
+
     private async Task PutItemIntoDynamoDb(FlashSet flashSet)
     {
         var cards = flashSet.FlashCards.Select(x => new AttributeValue
@@ -180,7 +179,7 @@ public class WhenUsingFlashSetRepository : IntegrationTestsBase
                 { nameof(FlashSet.Id), new AttributeValue { S = flashSet.Id.ToString() } },
                 { nameof(FlashSet.CreatorId), new AttributeValue { S = flashSet.CreatorId.ToString() } },
                 { nameof(FlashSet.Name), new AttributeValue { S = flashSet.Name } },
-                { nameof(FlashSet.FlashCards), new AttributeValue { L = cards.ToList() , IsLSet = true} },
+                { nameof(FlashSet.FlashCards), new AttributeValue { L = cards.ToList(), IsLSet = true } },
             }
         };
 

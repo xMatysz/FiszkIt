@@ -6,7 +6,7 @@ namespace FiszkIt.Api.Endpoints.FlashSetEndpoints;
 
 public static class GetById
 {
-    private record FlashSetsGetGetByIdResponse(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCardDtos);
+    private sealed record FlashSetsGetGetByIdResponse(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCardDtos);
 
     public static IEndpointRouteBuilder MapGetById(this IEndpointRouteBuilder app)
     {

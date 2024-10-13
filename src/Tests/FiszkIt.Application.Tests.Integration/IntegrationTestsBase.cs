@@ -7,9 +7,9 @@ using Xunit;
 
 namespace FiszkIt.Application.Tests.Integration;
 
-public class IntegrationTestsBase : IClassFixture<WebAppFactory>, IAsyncLifetime
+public class IntegrationTestsBase : IClassFixture<WebAppFactory>, IAsyncLifetime, IDisposable
 {
-    private readonly WebAppFactory _factory;
+    private readonly IServiceScope _scope;
 
     private static CreateTableRequest GetCreateTableRequest(string tableName)
         => new()
@@ -35,21 +35,25 @@ public class IntegrationTestsBase : IClassFixture<WebAppFactory>, IAsyncLifetime
 
     protected IntegrationTestsBase(WebAppFactory factory)
     {
-        _factory = factory;
-        var scope = _factory.Services.CreateScope();
-        ServiceProvider = scope.ServiceProvider;
+        _scope = factory.Services.CreateScope();
+        ServiceProvider = _scope.ServiceProvider;
 
         DynamoDbClient = ServiceProvider.GetRequiredService<IAmazonDynamoDB>();
         ApplicationOptions = ServiceProvider.GetRequiredService<IOptions<ApplicationOptions>>();
     }
 
-    public async Task InitializeAsync()
+    public Task InitializeAsync() =>
+        DynamoDbClient.CreateTableAsync(GetCreateTableRequest(ApplicationOptions.Value.TableName));
+
+    public Task DisposeAsync() =>
+        DynamoDbClient.DeleteTableAsync(ApplicationOptions.Value.TableName);
+
+    public void Dispose()
     {
-        await DynamoDbClient.CreateTableAsync(GetCreateTableRequest(ApplicationOptions.Value.TableName));
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
-    public async Task DisposeAsync()
-    {
-        await DynamoDbClient.DeleteTableAsync(ApplicationOptions.Value.TableName);
-    }
+    protected virtual void Dispose(bool disposing) =>
+        _scope.Dispose();
 }

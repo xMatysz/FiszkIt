@@ -13,17 +13,17 @@ namespace FiszkIt.Application.Tests.Integration;
 
 public class WebAppFactory : WebApplicationFactory<IWebAppMarker>, IAsyncLifetime
 {
-    private DynamoDbContainer DynamoDbContainer =
+    private readonly DynamoDbContainer dynamoDbContainer =
         new DynamoDbBuilder()
             .Build();
     public async Task InitializeAsync()
     {
-        await DynamoDbContainer.StartAsync();
+        await dynamoDbContainer.StartAsync();
     }
 
     public new async Task DisposeAsync()
     {
-        await DynamoDbContainer.DisposeAsync().AsTask();
+        await dynamoDbContainer.DisposeAsync().AsTask();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -32,7 +32,7 @@ public class WebAppFactory : WebApplicationFactory<IWebAppMarker>, IAsyncLifetim
 
         var dynamoConfig = new AmazonDynamoDBConfig
         {
-            ServiceURL = DynamoDbContainer.GetConnectionString()
+            ServiceURL = dynamoDbContainer.GetConnectionString()
         };
 
         builder.ConfigureTestServices(collection =>

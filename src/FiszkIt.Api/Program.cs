@@ -19,7 +19,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Configuration.AddSystemsManager(opt =>
     {
         opt.Path = $"/FiszkIt/{env}/";
-        opt.ReloadAfter = TimeSpan.FromMinutes(10);
+        opt.ReloadAfter = TimeSpan.FromMinutes(13);
     });
 
     builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
