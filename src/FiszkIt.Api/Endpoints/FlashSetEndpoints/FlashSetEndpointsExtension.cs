@@ -7,7 +7,8 @@ public static class FlashSetEndpointsExtension
         app.MapGetAll()
             .MapGetById()
             .MapCreate()
-            .MapDelete();
+            .MapDelete()
+            .MapUpdate();
 
         return app;
     }

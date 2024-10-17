@@ -38,7 +38,7 @@ public static class LoginUser
                 {
                     Status = (int)HttpStatusCode.BadRequest,
                     Title = "Parameters not specified",
-                    Detail = $"{nameof(token)} or {email} and {password} mus be specified"
+                    Detail = $"{nameof(token)} or {nameof(email)} and {nameof(password)} mus be specified"
                 };
 
                 return Results.Problem(problemDetails);

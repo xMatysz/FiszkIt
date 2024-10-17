@@ -58,3 +58,7 @@ Resources:
     Type: AWS::Serverless::Application
     Properties:
       Location: ./application-tamplate.yml
+      Parameters:
+        ApplicationName : !Ref 'ApplicationName'
+        Environment: !Ref 'Environment'
+        UserPoolId: !Ref 'CognitoUserPool'

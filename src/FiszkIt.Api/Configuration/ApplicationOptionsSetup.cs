@@ -5,9 +5,11 @@ namespace FiszkIt.Api.Configuration;
 
 public class ApplicationOptionsSetup(IConfiguration configuration) : IConfigureNamedOptions<ApplicationOptions>
 {
+    private const string SectionName = "Application";
+
     public void Configure(ApplicationOptions options)
     {
-        configuration.GetSection(nameof(ApplicationOptions)).Bind(options);
+        configuration.GetSection(SectionName).Bind(options);
     }
 
     public void Configure(string? name, ApplicationOptions options)

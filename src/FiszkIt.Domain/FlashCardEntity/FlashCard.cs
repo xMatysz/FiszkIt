@@ -9,6 +9,11 @@ public class FlashCard : Entity
     public string Question { get; set; }
     public string Answer { get; set; }
 
+    public FlashCard()
+        : this(string.Empty, string.Empty, Guid.Empty)
+    {
+    }
+
     private FlashCard(string question, string answer, Guid? id = null)
         : base(id ?? Guid.NewGuid())
     {

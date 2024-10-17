@@ -10,7 +10,7 @@ public static class Create
     private sealed record FlashSetsCreateResponse(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCardDtos);
     public static IEndpointRouteBuilder MapCreate(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/flashSets", async (
+        app.MapPost("/flashsets", async (
                 FlashSetsCreateRequest request,
                 HttpContext context,
                 IFlashSetService flashSetService,

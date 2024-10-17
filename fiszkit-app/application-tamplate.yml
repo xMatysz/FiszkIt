@@ -3,6 +3,21 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   SAM Template for fiszkit applicationæ
 
+Parameters:
+
+  ApplicationName:
+    Type: String
+    Description: Application name
+
+  Environment:
+    Type: String
+    Default: Development
+    Description: Environment to deploy
+
+  UserPoolId:
+    Type: String
+    Description: UserPool id
+
 Globals:
   Function:
     Timeout: 100
@@ -20,7 +35,52 @@ Resources:
       CodeUri: ./../src/FiszkIt.Api/
       Handler: FiszkIt.Api
       Runtime: dotnet8
+      Environment:
+        Variables:
+          ASPNETCORE_ENVIRONMENT: !Ref 'Environment'
       FunctionUrlConfig:
         AuthType: NONE
         InvokeMode: BUFFERED
-      
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref 'FiszkItTable'
+        - Statement:
+          - Action:
+              - ssm:GetParametersByPath
+            Effect: Allow
+            Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ApplicationName}/${Environment}/*
+        - Statement:
+          - Action:
+              - cognito-idp:AdminCreateUser
+              - cognito-idp:AdminInitiateAuth
+              - cognito-idp:AdminUpdateUserAttributes
+              - cognito-idp:AdminRespondToAuthChallenge
+            Effect: Allow
+            Resource: !Sub arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${UserPoolId}
+    DependsOn: 'FiszkItTable'
+
+  FiszkItTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: FiszkIt-Table
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+
+  FiszkItTableNameParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name: !Sub '/${ApplicationName}/${Environment}/Application/TableName'
+      Value: !Ref 'FiszkItTable'

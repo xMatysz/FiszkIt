@@ -9,7 +9,7 @@ public static class ConfirmUser
 {
     public static IEndpointRouteBuilder MapConfirmUser(this IEndpointRouteBuilder app)
     {
-        app.MapPost("confirm", async (
+        app.MapPost("/confirm", async (
             string session,
             string email,
             string password,

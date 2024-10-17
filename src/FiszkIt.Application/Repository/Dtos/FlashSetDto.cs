@@ -6,6 +6,11 @@ namespace FiszkIt.Application.Repository.Dtos;
 
 public record FlashSetDto(Guid Id, Guid CreatorId, string Name, FlashCardDto[] FlashCards)
 {
+    public FlashSetDto()
+        : this(Guid.Empty, Guid.Empty, string.Empty, [])
+    {
+    }
+
     public FlashSetDto(FlashSetItem set)
         : this(set.Id, set.CreatorId, set.Name, ConvertToDtos(set.FlashCards))
     {
